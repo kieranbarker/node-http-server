@@ -23,6 +23,18 @@ const server = net.createServer((socket) => {
 
 		// Log the body
 		console.log(body);
+
+		const responseBody = "<h1>Hello, World!</h1>";
+		const response =
+			"HTTP/1.1 200 OK\r\n" +
+			"Connection: close\r\n" +
+			`Content-Length: ${Buffer.byteLength(responseBody)}\r\n` +
+			"Content-Type: text/html\r\n" +
+			"\r\n" +
+			responseBody;
+
+		socket.write(response);
+		socket.end();
 	});
 
 	socket.on("end", () => {
