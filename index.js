@@ -6,21 +6,22 @@ const server = net.createServer((socket) => {
 		const data = chunk.toString();
 		console.log(data);
 
+		// Split the head and body
+		const [head, body] = data.split("\r\n\r\n");
+
 		// Extract the request line
-		const lines = data.split("\r\n");
+		const lines = head.split("\r\n");
 		const requestLine = lines[0];
-		const [method, path, protocol] = requestLine.split(" ");
-		console.log(method, path, protocol);
+		const [method, requestTarget, protocol] = requestLine.split(" ");
+		console.log(method, requestTarget, protocol);
 
 		// Extract the headers
-		const index = lines.indexOf("");
 		const headers = new Headers(
-			lines.slice(1, index).map((header) => header.split(": "))
+			lines.slice(1).map((header) => header.split(": "))
 		);
 		console.log(Object.fromEntries(headers));
 
-		// Extract the body
-		const body = lines.slice(index + 1);
+		// Log the body
 		console.log(body);
 	});
 
