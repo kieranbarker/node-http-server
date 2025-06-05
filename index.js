@@ -28,6 +28,7 @@ const server = net.createServer((socket) => {
 		const response =
 			"HTTP/1.1 200 OK\r\n" +
 			"Connection: close\r\n" +
+			`Date: ${new Date().toUTCString()}\r\n` +
 			`Content-Length: ${Buffer.byteLength(responseBody)}\r\n` +
 			"Content-Type: text/html\r\n" +
 			"\r\n" +
